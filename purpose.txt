@@ -1,1 +1,0 @@
-The purpose of repository to display my solutions to programming problems from various sources.
