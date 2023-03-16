@@ -1,5 +1,3 @@
-import time
-
 codons = {
     "UUU":"F","UUC":"F",
     "UUA":"L","UUG":"L",
@@ -29,7 +27,5 @@ codons = {
 
 with open('rosalind_prot.txt','r') as f:
     coding_strand = f.read()
-    s = time.time()
     protein = ''.join([codons[coding_strand[seq:seq + 3]] for seq in range(0,len(coding_strand)-4,3)])
-    print(time.time() - s)
     print(protein)
