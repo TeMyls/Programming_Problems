@@ -1,1 +1,1 @@
-Problems from Rosalind Info
+Problems from Rosalind.info
