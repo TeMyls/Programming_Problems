@@ -1,6 +1,6 @@
 import requests as rq
 import re
-import time
+
 
 def motif(file):
     with open(file,'r') as f:
