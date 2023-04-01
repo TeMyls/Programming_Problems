@@ -142,18 +142,20 @@ def greedy_scs(arr):
 
 def reader(file,limit):
     reads = []
-    cnt = 0
-    #note you only get half of the reads in limit
+    the_count = 0
+    
     with open(file,"r") as f:
-        while True:
-            cnt += 1
-            line = f.readline().strip("\n")
-            if cnt%2 == 0 and "N" not in line:
+        line = f.readline().strip("\n")
+        while line != '':
+            
+            if '>' not in line and '@' not in line:
                 reads.append(line)
-            if cnt == limit:
-                break
-            if not line:
-                break
+                the_count += 1
+                
+            if the_count == limit and the_count != None:
+                return reads
+            line = f.readline().strip("\n")
+            
     return reads
 
 def one_fasta(file):
