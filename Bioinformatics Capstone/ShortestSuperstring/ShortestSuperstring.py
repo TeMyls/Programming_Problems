@@ -117,7 +117,7 @@ def greedy_scs(arr):
         overlap = string_overlap[1]
         #Biologically relevant overlap is important as longer overlap has 
         #less of a statistical chance of happing due to chance
-        if overlap >= max_overlap and overlap > 10:
+        if overlap >= max_overlap:
             max_overlap = overlap
             true_string = string
             index_1 = 0
