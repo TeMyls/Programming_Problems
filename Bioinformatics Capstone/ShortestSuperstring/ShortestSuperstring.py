@@ -125,11 +125,10 @@ def greedy_scs(arr):
             
     #print(max_overlap)
     #removal from array has to be like this so the indexing doesn't mess up    
-    if index_2 != 0:
-        arr.pop(index_2)
-        arr.pop(index_1)
-    else:
-        arr.pop(index_1)
+    
+    arr.pop(index_2)
+    arr.pop(index_1)
+    
     
     
     
