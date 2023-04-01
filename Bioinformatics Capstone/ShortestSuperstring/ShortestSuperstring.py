@@ -107,7 +107,7 @@ def combiner(string1,string2):
 def greedy_scs(arr):
     max_overlap, index_1,index_2,true_string = 0 ,0 ,0 ,""
     #print(len(arr))
-    #print(arr)
+    
     if len(arr) == 1:
         return arr[0]
     
@@ -115,16 +115,21 @@ def greedy_scs(arr):
         string_overlap = combiner(arr[0],arr[j])
         string = string_overlap[0]
         overlap = string_overlap[1]
-        if overlap >= max_overlap:
+        #Biologically relevant overlap is important as longer overlap has 
+        #less of a statistical chance of happing due to chance
+        if overlap >= max_overlap and overlap > 10:
             max_overlap = overlap
             true_string = string
             index_1 = 0
             index_2 = j
             
     #print(max_overlap)
-    #removal from array has to be like this so the indexing doesn't mess up       
-    arr.pop(index_2)
-    arr.pop(index_1)
+    #removal from array has to be like this so the indexing doesn't mess up    
+    if index_2 != 0:
+        arr.pop(index_2)
+        arr.pop(index_1)
+    else:
+        arr.pop(index_1)
     
     
     
