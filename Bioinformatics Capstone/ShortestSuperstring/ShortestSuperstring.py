@@ -9,7 +9,7 @@ arr = ["catg", "ctaagt", "gcta","atgcatc" ,"ttca"]
 string2 = "acccgatatta"
 arr2 = ["accc","cccgat","atatt","gattata"]
 
-sting3 = "AGAGTCATCCAGCTGGAGCCCTGAGTGGCTGAGCTCAGGC"
+string3 = "AGAGTCATCCAGCTGGAGCCCTGAGTGGCTGAGCTCAGGC"
 arr3 = [
     "AGAGTCATCCAGCTG",
     "TCCAGCTGGAGCCC",
@@ -44,7 +44,7 @@ def combiner(string1,string2):
         if i <= len(shorter):
             #checks if suffix of shorter overlaps with prefix of longer and records the longest overlap
             #print(shorter[len(shorter)-i:],longer[:i],sep='_')
-            if shorter[len(shorter)-i:] == longer[:i]:
+            if shorter[-i:] == longer[:i]:
                 if len(longer[:i]) > len(ol_letters):
                     ol_letters  = longer[:i]
                     max_ol = len(ol_letters)
@@ -59,7 +59,7 @@ def combiner(string1,string2):
         if i <= len(shorter):
             #sees if anything in longer matches up with shorter
             # print(shorter[:i],longer[len(longer)-i:],sep='|')
-            if shorter[:i] == longer[len(longer)-i:]:
+            if shorter[:i] == longer[-i:]:
                 if len(shorter[:i]) > len(ol_letters):
                     ol_letters =  longer[len(longer)-i:]
                     max_ol = len(ol_letters)
@@ -115,24 +115,27 @@ def greedy_scs(arr):
         string_overlap = combiner(arr[0],arr[j])
         string = string_overlap[0]
         overlap = string_overlap[1]
-        #Biologically relevant overlap is important as longer overlap has 
-        #less of a statistical chance of happing due to chance
-        if overlap >= max_overlap:
+        #Making the overlap exceed a certain amount in order to
+        #ensure biological relevant
+        if overlap >= max_overlap and overlap > 8:
             max_overlap = overlap
             true_string = string
             index_1 = 0
             index_2 = j
             
-    #print(max_overlap)
+    print(max_overlap)
     #removal from array has to be like this so the indexing doesn't mess up    
+    if index_2 != 0:
+        arr.pop(index_2)
+        arr.pop(index_1)
+        arr.append(true_string)
+    else:
+        arr.pop(index_1)
     
-    arr.pop(index_2)
-    arr.pop(index_1)
     
     
     
     
-    arr.append(true_string)
     return greedy_scs(arr)
 
 
@@ -145,7 +148,7 @@ def reader(file,limit):
         while True:
             cnt += 1
             line = f.readline().strip("\n")
-            if cnt%2 == 0:
+            if cnt%2 == 0 and "N" not in line:
                 reads.append(line)
             if cnt == limit:
                 break
@@ -157,6 +160,7 @@ def one_fasta(file):
     for seq_record in SeqIO.parse(file,"fasta"):
         return str(seq_record.seq)
 
+#-----------------------------------------------------------
 
 #Organism: Mycoplasma genitalium
 #data used:
@@ -165,20 +169,24 @@ def one_fasta(file):
 
 
 whole_genome = one_fasta("Mycoplasma genitalium.fasta")
-reads = reader("Mycoplasma genitalium reads.fasta", 2000)
-random_reads = random.choices(reads,k = 100)
-print(whole_genome.find(reads[0]))
+reads = reader("Mycoplasma genitalium reads.fasta", 100)
+random_reads = random.choices(reads,k = 30)
+
+
+
+
+#print(suff_arr(string1))
+
+
+#print(whole_genome.find(reads[0]))
 #print(random_reads[0])
 
 
-start = time.time()
+#start = time.time()
 reconstructed_reads = greedy_scs(random_reads)
 
-print(time.time() - start)
+#print(time.time() - start)
 print(reconstructed_reads)
-
-
-
-
+print(reconstructed_reads in whole_genome)
 
 
