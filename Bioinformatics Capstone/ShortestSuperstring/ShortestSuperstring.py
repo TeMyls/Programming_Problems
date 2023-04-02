@@ -149,10 +149,11 @@ def reader(file,limit):
         line = f.readline().strip("\n")
         while line != '':
             #print(emp_string)
-            if '>' not in line and '@' not in line and 'N' not in line:
+            if '>' not in line and '@' not in line:
                 emp_string += line
-                the_count += 1
+               
             else:
+                the_count += 1
                 reads.append(emp_string)
                 emp_string = ''
             if the_count == limit and the_count != None:
