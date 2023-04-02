@@ -142,16 +142,19 @@ def greedy_scs(arr):
 
 def reader(file,limit):
     reads = []
+    emp_string = ''
     the_count = 0
     
     with open(file,"r") as f:
         line = f.readline().strip("\n")
         while line != '':
-            
-            if '>' not in line and '@' not in line:
-                reads.append(line)
+            #print(emp_string)
+            if '>' not in line and '@' not in line and 'N' not in line:
+                emp_string += line
                 the_count += 1
-                
+            else:
+                reads.append(emp_string)
+                emp_string = ''
             if the_count == limit and the_count != None:
                 return reads
             line = f.readline().strip("\n")
